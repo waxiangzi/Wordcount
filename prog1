@@ -1,0 +1,17 @@
+#!/bin/sh
+
+pass=$1
+if [ "$pass" = "" ]; then
+  echo "请输入解决密码，解压默认的big.txt.zip文件."
+  exit 1;
+fi
+
+echo "正在解压文件..."
+unzip -P $pass -x big.txt.zip
+
+echo "文件big.txt分词中..."
+sed -i 's/;/\n/g' big.txt
+
+echo "正在统计，请稍候..."
+echo "大概频率是10M数据/秒..."
+ruby count.rb big.txt
